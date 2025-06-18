@@ -1,5 +1,6 @@
 
 import { X } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface DomainModalProps {
   isOpen: boolean;
@@ -9,6 +10,8 @@ interface DomainModalProps {
 }
 
 const DomainModal = ({ isOpen, onClose, domainTitle, departments }: DomainModalProps) => {
+  const { t } = useLanguage();
+  
   if (!isOpen) return null;
 
   return (
@@ -25,7 +28,7 @@ const DomainModal = ({ isOpen, onClose, domainTitle, departments }: DomainModalP
         </div>
         
         <div className="p-6">
-          <h3 className="text-lg font-semibold mb-4 text-emerald-600">Departments:</h3>
+          <h3 className="text-lg font-semibold mb-4 text-emerald-600">{t('departments')}:</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {departments.map((dept, index) => (
               <div

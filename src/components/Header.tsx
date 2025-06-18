@@ -2,17 +2,20 @@
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { useState } from 'react';
+import { useLanguage } from '../contexts/LanguageContext';
+import LanguageToggle from './LanguageToggle';
 
 const Header = () => {
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { t } = useLanguage();
 
   const navItems = [
-    { name: 'Home', path: '/' },
-    { name: 'Events', path: '/events' },
-    { name: 'Gallery', path: '/gallery' },
-    { name: 'About', path: '/about' },
-    { name: 'Login', path: '/login' },
+    { name: t('home'), path: '/' },
+    { name: t('events'), path: '/events' },
+    { name: t('gallery'), path: '/gallery' },
+    { name: t('about'), path: '/about' },
+    { name: t('login'), path: '/login' },
   ];
 
   return (
@@ -21,23 +24,26 @@ const Header = () => {
         <div className="flex justify-between items-center py-4">
           {/* Logo */}
           <Link to="/" className="text-2xl font-bold text-emerald-600">
-            NALLORE VATTAM
+            {t('heroTitle')}
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex space-x-8">
-            {navItems.map((item) => (
-              <Link
-                key={item.name}
-                to={item.path}
-                className={`text-gray-700 hover:text-emerald-600 transition-colors duration-200 font-medium ${
-                  location.pathname === item.path ? 'text-emerald-600 border-b-2 border-emerald-600' : ''
-                }`}
-              >
-                {item.name}
-              </Link>
-            ))}
-          </nav>
+          <div className="hidden md:flex items-center space-x-8">
+            <nav className="flex space-x-8">
+              {navItems.map((item) => (
+                <Link
+                  key={item.name}
+                  to={item.path}
+                  className={`text-gray-700 hover:text-emerald-600 transition-colors duration-200 font-medium ${
+                    location.pathname === item.path ? 'text-emerald-600 border-b-2 border-emerald-600' : ''
+                  }`}
+                >
+                  {item.name}
+                </Link>
+              ))}
+            </nav>
+            <LanguageToggle />
+          </div>
 
           {/* Mobile Menu Button */}
           <button
@@ -63,6 +69,9 @@ const Header = () => {
                 {item.name}
               </Link>
             ))}
+            <div className="mt-4 pt-2 border-t">
+              <LanguageToggle />
+            </div>
           </nav>
         )}
       </div>

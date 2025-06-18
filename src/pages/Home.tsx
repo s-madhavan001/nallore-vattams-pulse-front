@@ -2,19 +2,19 @@
 import { useState } from 'react';
 import DomainBox from '../components/DomainBox';
 import DomainModal from '../components/DomainModal';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const Home = () => {
+  const { t, language } = useLanguage();
   const [selectedDomain, setSelectedDomain] = useState<{
     title: string;
     departments: string[];
   } | null>(null);
 
-  const domains = [
-    {
-      title: 'Education',
-      icon: '📚',
-      description: 'Empowering communities through quality education',
-      departments: [
+  // Department translations
+  const departmentTranslations = {
+    english: {
+      education: [
         'Primary Education',
         'Secondary Education',
         'Vocational Training',
@@ -26,13 +26,8 @@ const Home = () => {
         'Special Education',
         'Language Development',
         'Career Guidance'
-      ]
-    },
-    {
-      title: 'Healthcare',
-      icon: '🏥',
-      description: 'Providing accessible healthcare services',
-      departments: [
+      ],
+      healthcare: [
         'Primary Healthcare',
         'Community Medicine',
         'Mental Health',
@@ -44,13 +39,8 @@ const Home = () => {
         'Emergency Services',
         'Nutrition Programs',
         'Health Insurance'
-      ]
-    },
-    {
-      title: 'Environment',
-      icon: '🌱',
-      description: 'Protecting and preserving our environment',
-      departments: [
+      ],
+      environment: [
         'Conservation',
         'Renewable Energy',
         'Waste Management',
@@ -62,13 +52,8 @@ const Home = () => {
         'Pollution Control',
         'Biodiversity Protection',
         'Green Technology'
-      ]
-    },
-    {
-      title: 'Women Empowerment',
-      icon: '👩',
-      description: 'Promoting gender equality and women rights',
-      departments: [
+      ],
+      womenEmpowerment: [
         'Skill Development',
         'Entrepreneurship',
         'Legal Aid',
@@ -80,13 +65,8 @@ const Home = () => {
         'Domestic Violence Prevention',
         'Economic Empowerment',
         'Rights Advocacy'
-      ]
-    },
-    {
-      title: 'Rural Development',
-      icon: '🏘️',
-      description: 'Improving rural infrastructure and livelihoods',
-      departments: [
+      ],
+      ruralDevelopment: [
         'Infrastructure Development',
         'Agricultural Support',
         'Water Supply',
@@ -98,13 +78,8 @@ const Home = () => {
         'Transportation',
         'Communication Systems',
         'Livelihood Programs'
-      ]
-    },
-    {
-      title: 'Child Welfare',
-      icon: '👶',
-      description: 'Ensuring child rights and protection',
-      departments: [
+      ],
+      childWelfare: [
         'Child Protection',
         'Nutrition Programs',
         'Early Childhood Care',
@@ -116,13 +91,8 @@ const Home = () => {
         'Adoption Services',
         'Child Rights Advocacy',
         'Special Needs Support'
-      ]
-    },
-    {
-      title: 'Elderly Care',
-      icon: '👴',
-      description: 'Supporting senior citizens and elderly care',
-      departments: [
+      ],
+      elderlyCare: [
         'Senior Care Services',
         'Health Monitoring',
         'Social Activities',
@@ -134,13 +104,8 @@ const Home = () => {
         'Mental Health Support',
         'Emergency Services',
         'Family Support'
-      ]
-    },
-    {
-      title: 'Disaster Relief',
-      icon: '🆘',
-      description: 'Emergency response and disaster management',
-      departments: [
+      ],
+      disasterRelief: [
         'Emergency Response',
         'Relief Distribution',
         'Rehabilitation',
@@ -152,13 +117,8 @@ const Home = () => {
         'Medical Emergency',
         'Food Security',
         'Psychological Support'
-      ]
-    },
-    {
-      title: 'Skill Development',
-      icon: '🛠️',
-      description: 'Building skills for better employment opportunities',
-      departments: [
+      ],
+      skillDevelopment: [
         'Technical Training',
         'Soft Skills',
         'Computer Training',
@@ -171,13 +131,190 @@ const Home = () => {
         'Financial Literacy',
         'Innovation Labs'
       ]
+    },
+    tamil: {
+      education: [
+        'ஆரம்ப கல்வி',
+        'இடைநிலை கல்வி',
+        'தொழில் பயிற்சி',
+        'வயது வந்தோர் கல்வியறிவு',
+        'டிஜிட்டல் கல்வியறிவு',
+        'ஆசிரியர் பயிற்சி',
+        'கல்வி வளங்கள்',
+        'உதவித்தொகை திட்டங்கள்',
+        'சிறப்பு கல்வி',
+        'மொழி வளர்ச்சி',
+        'தொழில் வழிகாட்டுதல்'
+      ],
+      healthcare: [
+        'முதல்நிலை சுகாதாரம்',
+        'சமூக மருத்துவம்',
+        'மனநலம்',
+        'தாய்மை பராமரிப்பு',
+        'குழந்தை சுகாதாரம்',
+        'தடுப்பு பராமரிப்பு',
+        'சுகாதார விழிப்புணர்வு',
+        'மருத்துவ முகாம்கள்',
+        'அவசர சேவைகள்',
+        'ஊட்டச்சத்து திட்டங்கள்',
+        'சுகாதார காப்பீடு'
+      ],
+      environment: [
+        'பாதுகாப்பு',
+        'புதுப்பிக்கத்தக்க ஆற்றல்',
+        'கழிவு மேலாண்மை',
+        'நீர் பாதுகாப்பு',
+        'காடு வளர்ப்பு',
+        'காலநிலை நடவடிக்கை',
+        'நிலையான விவசாயம்',
+        'சுற்றுச்சூழல் கல்வி',
+        'மாசு கட்டுப்பாடு',
+        'பல்லுயிர் பாதுகாப்பு',
+        'பச்சை தொழில்நுட்பம்'
+      ],
+      womenEmpowerment: [
+        'திறன் மேம்பாடு',
+        'தொழில் முனைவோர்',
+        'சட்ட உதவி',
+        'சுய உதவி குழுக்கள்',
+        'தலைமைத்துவ பயிற்சி',
+        'நிதி சேர்க்கை',
+        'சுகாதார விழிப்புணர்வு',
+        'கல்வி ஆதரவு',
+        'குடும்ப வன்முறை தடுப்பு',
+        'பொருளாதார வலுவூட்டல்',
+        'உரிமைகள் வாதம்'
+      ],
+      ruralDevelopment: [
+        'உள்கட்டமைப்பு வளர்ச்சி',
+        'விவசாய ஆதரவு',
+        'நீர் வழங்கல்',
+        'கிராமிய வங்கி',
+        'தொழில்நுட்ப அணுகல்',
+        'சந்தை இணைப்புகள்',
+        'கூட்டுறவு வளர்ச்சி',
+        'கிராமிய வீட்டுவசதி',
+        'போக்குவரத்து',
+        'தகவல் தொடர்பு அமைப்புகள்',
+        'வாழ்வாதார திட்டங்கள்'
+      ],
+      childWelfare: [
+        'குழந்தை பாதுகாப்பு',
+        'ஊட்டச்சத்து திட்டங்கள்',
+        'ஆரம்பகால குழந்தைப் பராமரிப்பு',
+        'குழந்தை கல்வி',
+        'சுகாதார சேவைகள்',
+        'பொழுதுபோக்கு நடவடிக்கைகள்',
+        'ஆலோசனை சேவைகள்',
+        'வளர்ப்பு பராமரிப்பு',
+        'தத்தெடுப்பு சேவைகள்',
+        'குழந்தை உரிமைகள் வாதம்',
+        'சிறப்பு தேவைகள் ஆதரவு'
+      ],
+      elderlyCare: [
+        'மூத்த பராமரிப்பு சேவைகள்',
+        'சுகாதார கண்காணிப்பு',
+        'சமூக நடவடிக்கைகள்',
+        'வீட்டு பராமரிப்பு',
+        'ஓய்வூதிய ஆதரவு',
+        'மருத்துவ உதவி',
+        'தோழமை திட்டங்கள்',
+        'பொழுதுபோக்கு நடவடிக்கைகள்',
+        'மனநல ஆதரவு',
+        'அவசர சேவைகள்',
+        'குடும்ப ஆதரவு'
+      ],
+      disasterRelief: [
+        'அவசர மறுமொழி',
+        'நிவாரண விநியோகம்',
+        'மறுவாழ்வு',
+        'தயார்நிலை பயிற்சி',
+        'ஆபத்து மதிப்பீடு',
+        'சமூக அணிதிரட்டல்',
+        'மீட்பு திட்டங்கள்',
+        'தங்குமிட மேலாண்மை',
+        'மருத்துவ அவசரநிலை',
+        'உணவு பாதுகாப்பு',
+        'உளவியல் ஆதரவு'
+      ],
+      skillDevelopment: [
+        'தொழில்நுட்ப பயிற்சி',
+        'மென்மையான திறன்கள்',
+        'கணினி பயிற்சி',
+        'கைவினைப்பொருட்கள்',
+        'தொழில் முனைவோர்',
+        'வேலை வாய்ப்பு',
+        'சான்றிதழ் திட்டங்கள்',
+        'தொழில் கூட்டாண்மை',
+        'தொழில் ஆலோசனை',
+        'நிதி கல்வியறிவு',
+        'புத்தாக்க ஆய்வகங்கள்'
+      ]
+    }
+  };
+
+  const domains = [
+    {
+      title: t('education'),
+      icon: '📚',
+      description: t('educationDesc'),
+      key: 'education'
+    },
+    {
+      title: t('healthcare'),
+      icon: '🏥',
+      description: t('healthcareDesc'),
+      key: 'healthcare'
+    },
+    {
+      title: t('environment'),
+      icon: '🌱',
+      description: t('environmentDesc'),
+      key: 'environment'
+    },
+    {
+      title: t('womenEmpowerment'),
+      icon: '👩',
+      description: t('womenEmpowermentDesc'),
+      key: 'womenEmpowerment'
+    },
+    {
+      title: t('ruralDevelopment'),
+      icon: '🏘️',
+      description: t('ruralDevelopmentDesc'),
+      key: 'ruralDevelopment'
+    },
+    {
+      title: t('childWelfare'),
+      icon: '👶',
+      description: t('childWelfareDesc'),
+      key: 'childWelfare'
+    },
+    {
+      title: t('elderlyCare'),
+      icon: '👴',
+      description: t('elderlyCareDesc'),
+      key: 'elderlyCare'
+    },
+    {
+      title: t('disasterRelief'),
+      icon: '🆘',
+      description: t('disasterReliefDesc'),
+      key: 'disasterRelief'
+    },
+    {
+      title: t('skillDevelopment'),
+      icon: '🛠️',
+      description: t('skillDevelopmentDesc'),
+      key: 'skillDevelopment'
     }
   ];
 
   const handleDomainClick = (domain: typeof domains[0]) => {
+    const departments = departmentTranslations[language][domain.key as keyof typeof departmentTranslations.english];
     setSelectedDomain({
       title: domain.title,
-      departments: domain.departments
+      departments: departments
     });
   };
 
@@ -186,11 +323,10 @@ const Home = () => {
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-emerald-600 to-teal-600 text-white py-20">
         <div className="container mx-auto px-4 text-center">
-          <h1 className="text-5xl font-bold mb-4">NALLORE VATTAM</h1>
-          <p className="text-xl mb-8">Empowering Communities, Transforming Lives</p>
+          <h1 className="text-5xl font-bold mb-4">{t('heroTitle')}</h1>
+          <p className="text-xl mb-8">{t('heroSubtitle')}</p>
           <p className="text-lg max-w-2xl mx-auto">
-            Dedicated to creating positive change in society through sustainable development, 
-            community empowerment, and social welfare initiatives.
+            {t('heroDescription')}
           </p>
         </div>
       </section>
@@ -198,9 +334,9 @@ const Home = () => {
       {/* Domains Section */}
       <section className="py-16">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center text-gray-800 mb-4">Our Domains</h2>
+          <h2 className="text-4xl font-bold text-center text-gray-800 mb-4">{t('domainsTitle')}</h2>
           <p className="text-lg text-gray-600 text-center mb-12 max-w-2xl mx-auto">
-            Click on any domain to explore our departments and services
+            {t('domainsSubtitle')}
           </p>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -223,21 +359,17 @@ const Home = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Vision */}
             <div className="bg-emerald-50 rounded-lg p-8 border border-emerald-200">
-              <h2 className="text-3xl font-bold text-emerald-600 mb-6">Our Vision</h2>
+              <h2 className="text-3xl font-bold text-emerald-600 mb-6">{t('ourVision')}</h2>
               <p className="text-gray-700 text-lg leading-relaxed">
-                To create a society where every individual has equal opportunities for growth and development, 
-                where communities are self-reliant and sustainable, and where social justice and harmony prevail. 
-                We envision a world free from poverty, inequality, and discrimination.
+                {t('visionText')}
               </p>
             </div>
 
             {/* Mission */}
             <div className="bg-teal-50 rounded-lg p-8 border border-teal-200">
-              <h2 className="text-3xl font-bold text-teal-600 mb-6">Our Mission</h2>
+              <h2 className="text-3xl font-bold text-teal-600 mb-6">{t('ourMission')}</h2>
               <p className="text-gray-700 text-lg leading-relaxed">
-                To empower marginalized communities through comprehensive development programs, advocacy for human rights, 
-                and sustainable initiatives that address education, healthcare, environment, and social welfare. 
-                We are committed to building a just and equitable society through collaborative efforts.
+                {t('missionText')}
               </p>
             </div>
           </div>
